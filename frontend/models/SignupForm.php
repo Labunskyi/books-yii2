@@ -4,6 +4,7 @@ namespace frontend\models;
 use Yii;
 use yii\base\Model;
 use common\models\User;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * Signup form
@@ -25,7 +26,7 @@ class SignupForm extends Model
             ['username', 'required'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
-
+			
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
