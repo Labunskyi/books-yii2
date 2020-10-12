@@ -8,11 +8,12 @@ use frontend\modules\admin\models\GenresSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * GenresController implements the CRUD actions for Genres model.
  */
-class GenresController extends Controller
+class GenresController extends BooksController
 {
     /**
      * {@inheritdoc}
@@ -24,6 +25,17 @@ class GenresController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+			'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'create', 'update', 'delete'],
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];

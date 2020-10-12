@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\filters\AccessControl;
 
 /**
  * BooksController implements the CRUD actions for Books model.
@@ -28,8 +29,30 @@ class BooksController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+			'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'create', 'update', 'delete'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
         ];
     }
+	
+	public function beforeAction($action)
+    {
+        if(!Yii::$app->user->isGuest) {
+            if (Yii::$app->user->identity->username !== 'admin') {
+                return $this->goHome();
+            }
+        }
+        return parent::beforeAction($action);
+    }
+
 
     /**
      * Lists all Books models.

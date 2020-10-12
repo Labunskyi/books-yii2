@@ -14,6 +14,7 @@ use frontend\models\forms\PasswordResetRequestForm;
 use frontend\models\forms\ResetPasswordForm;
 use frontend\models\forms\SignupForm;
 use frontend\models\forms\ContactForm;
+use common\models\User;
 
 /**
  * Site controller
@@ -85,11 +86,15 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
+			
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+			if (Yii::$app->user->identity->username == User::USER_TYPE_ADMIN) {
+                return $this->redirect(Yii::$app->urlManager->createUrl('/admin/books'));
+            }
             return $this->goBack();
         } else {
             $model->password = '';

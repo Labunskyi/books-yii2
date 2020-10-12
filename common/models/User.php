@@ -27,6 +27,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+	const USER_TYPE_ADMIN = 'admin';
 
 
     /**
@@ -34,7 +35,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return '{{users}}';
+        return '{{user}}';
     }
 
     /**
@@ -219,5 +220,10 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+	
+	public function getUserType()
+    {
+        return $this->type;
     }
 }
