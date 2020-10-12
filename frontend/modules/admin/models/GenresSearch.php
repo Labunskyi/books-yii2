@@ -1,27 +1,24 @@
 <?php
 
-namespace common\models;
+namespace frontend\modules\admin\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Books;
+use common\models\Genres;
 
 /**
- * BooksSearch represents the model behind the search form of `common\models\Books`.
+ * GenresSearch represents the model behind the search form of `common\models\Genres`.
  */
-class BooksSearch extends Books
+class GenresSearch extends Genres
 {
     /**
      * {@inheritdoc}
      */
-	public $authors;
-	public $genres;
-	
     public function rules()
     {
         return [
             [['id'], 'integer'],
-            [['title', 'content', 'img', 'date', 'authors', 'genres'], 'safe'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -43,7 +40,7 @@ class BooksSearch extends Books
      */
     public function search($params)
     {
-        $query = Books::find();
+        $query = Genres::find();
 
         // add conditions that should always apply here
 
@@ -58,18 +55,14 @@ class BooksSearch extends Books
             // $query->where('0=1');
             return $dataProvider;
         }
-		$query->joinWith(['authors', 'genres']);
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'date' => $this->date,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content])
-            ->andFilterWhere(['like', 'img', $this->img])
-			->andFilterWhere(['in', 'authors.id', $this->authors])
-			->andFilterWhere(['in', 'genres.id', $this->genres]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
+
         return $dataProvider;
     }
 }

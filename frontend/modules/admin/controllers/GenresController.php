@@ -3,18 +3,16 @@
 namespace frontend\modules\admin\controllers;
 
 use Yii;
-use frontend\modules\admin\models\forms\BooksForm;
-use common\models\Books;
-use frontend\modules\admin\models\BooksSearch;
+use common\models\Genres;
+use frontend\modules\admin\models\GenresSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
- * BooksController implements the CRUD actions for Books model.
+ * GenresController implements the CRUD actions for Genres model.
  */
-class BooksController extends Controller
+class GenresController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,14 +30,14 @@ class BooksController extends Controller
     }
 
     /**
-     * Lists all Books models.
+     * Lists all Genres models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new BooksSearch();
+        $searchModel = new GenresSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -47,7 +45,7 @@ class BooksController extends Controller
     }
 
     /**
-     * Displays a single Books model.
+     * Displays a single Genres model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -60,30 +58,25 @@ class BooksController extends Controller
     }
 
     /**
-     * Creates a new Books model.
+     * Creates a new Genres model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new BooksForm();
-		//print_r($model->img); die;
-		if ($model->load(Yii::$app->request->post())) {
-			$model->img = UploadedFile::getInstance($model, 'img');
-			//print_r($model->img); die;
-            $model->upload();
-            
+        $model = new Genres();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            $model->getErrors();
         }
+
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing Books model.
+     * Updates an existing Genres model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -103,7 +96,7 @@ class BooksController extends Controller
     }
 
     /**
-     * Deletes an existing Books model.
+     * Deletes an existing Genres model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -117,15 +110,15 @@ class BooksController extends Controller
     }
 
     /**
-     * Finds the Books model based on its primary key value.
+     * Finds the Genres model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Books the loaded model
+     * @return Genres the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Books::findOne($id)) !== null) {
+        if (($model = Genres::findOne($id)) !== null) {
             return $model;
         }
 

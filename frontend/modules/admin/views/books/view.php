@@ -58,11 +58,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'img',
             'date',
 			[
-                'label' => 'date',
-				'format' => 'html',
-                'value' => $model->date,
-            ],
-			[
                 'label' => 'Авторы',
 				'format' => 'html',
                 'value' => Html::ul($authors, ['encode' => false]),

@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 
+
 /**
  * This is the model class for table "books".
  *
@@ -33,8 +34,9 @@ class Books extends \yii\db\ActiveRecord
         return [
             [['title'], 'required'],
             [['content'], 'string'],
-            [['date', 'authors'], 'safe'],
-            [['title', 'img'], 'string', 'max' => 255],
+            [['date'], 'safe'],
+            [['title'], 'string', 'max' => 255],
+			[['img'], 'file'],
         ];
     }
 
@@ -49,9 +51,9 @@ class Books extends \yii\db\ActiveRecord
             'content' => 'Content',
             'img' => 'Img',
             'date' => 'date',
-			'authors' => 'Authors'
         ];
     }
+	
 
     /**
      * {@inheritdoc}

@@ -30,10 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            
+            'id',
             'title',
             'content:ntext',
-            'img',
+            [
+				'attribute'=>'img',
+				'label'=>'Image',
+				'format'=>'html', // Возможные варианты: raw, html
+				'value'=> function ($data) {
+					return Html::img(Yii::getAlias('@web').'/images/'. $data['img'],
+						['width' => '80px']);
+				},
+			],
             'date',
 			[
 				'attribute'=>'authors',
@@ -67,5 +75,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 	<?php Pjax::end(); ?>
+	
 
 </div>

@@ -37,7 +37,7 @@ class BooksController extends Controller
     public function actionIndex()
     {
         $query = Books::find()->with(['authors', 'genres']);
-		$pages = new Pagination(['defaultPageSize'=> 3, 'totalCount' => $query->count()]);
+		$pages = new Pagination(['defaultPageSize'=> 10, 'totalCount' => $query->count()]);
 		$books = $query->offset($pages->offset)
 		->limit($pages->limit)
 		->all();
